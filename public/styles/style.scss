@@ -1,3 +1,6 @@
+body{
+    background-color: rgb(245, 249, 252);
+}
 .section {
     min-height: 50vh;
     display: flex;
@@ -7,5 +10,15 @@
 }
 
 .section:nth-child(even){
-    background-color: rgb(226, 226, 226);
+    background-color: rgb(215, 219, 220);
+}
+
+.qualities .wrapper {
+    display: flex;
+
+}
+
+.qualities .icon {
+    display: flex;
+    align-items: center;
 }
