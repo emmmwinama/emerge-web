@@ -1,117 +1,150 @@
 CREATE DATABASE POS;
 
-CREATE TABLE PRODUCT (
-	id int(11),
-    supplier_id int(11),
-    category_id int(11),
-    brandName varchar(50),
-    modelNumber varchar(50),
-    description varchar(50),
-    isTaxable boolean,
-    isActive boolean,
+SET default_storage_engine=INNODB;
+
+CREATE TABLE category(
+	id int(11) NOT NULL,
+    category_description VARCHAR(100) NOT NULL,
+    parent_category_id int(11) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 );
 
-CREATE TABLE CATEGORY(
-	id int(11),
-    category_description varchar(100),
-    parent_category_id int(11),
-    primary key(id)
+CREATE TABLE product (
+	id int(11) NOT NULL,
+    supplier_id int(11) NOT NULL,
+    category_id int(11) NOT NULL,
+    brand_Name VARCHAR(50) NOT NULL,
+    model_number VARCHAR(50) NOT NULL,
+    description VARCHAR(50) NOT NULL,
+    isTaxable boolean NOT NULL,
+    isActive boolean NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
-CREATE TABLE priceHistory(
-	id int(11),
-    product_id int(11),
-    price_date date,
-    price_bought float(15),
-    price_sold float(15),
-    primary key(id)
+CREATE TABLE productdetail(
+    id int(11) NOT NULL,
+    detail_name VARCHAR(50) NOT NULL,
+    detail_value VARCHAR(50) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
-CREATE TABLE CUSTOMER(
-	id int(11),
-    customer_name varchar(50),
-    isCompany boolean,
-    customer_since date,
-    address_1 varchar(50),
-    address_2 varchar(50),
-    district varchar(50),
-    primary key(id)
+CREATE TABLE pricehistory(
+	id int(11) NOT NULL,
+    product_id int(11) NOT NULL,
+    price_date DATE NOT NULL,
+    price_bought FLOAT(15) NOT NULL,
+    price_sold FLOAT(15) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE customer(
+	id int(11) NOT NULL,
+    customer_name VARCHAR(50) NOT NULL,
+    isCompany boolean NOT NULL,
+    customer_since DATE NOT NULL,
+    address_1 VARCHAR(50) NOT NULL,
+    address_2 VARCHAR(50) NOT NULL,
+    district VARCHAR(50) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
     
 );
 
 CREATE TABLE INVOICE(
-	id int(11),
-    date date,
-    customer_id int(11),
-    invoice_total float(15),
-    sales_tax_rate float(5),
-    sales_tax_amount float(15),
-    grand_total float(15),
-    isPaid boolean,
-    primary key(id)
+	id int(11) NOT NULL,
+    date DATE NOT NULL,
+    customer_id int(11) NOT NULL,
+    invoice_total FLOAT(15) NOT NULL,
+    sales_tax_rate FLOAT(5) NOT NULL,
+    sales_tax_amount FLOAT(15) NOT NULL,
+    grand_total FLOAT(15) NOT NULL,
+    isPaid boolean NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE INVOICE_DETAIL(
-	id int(11),
-    invoice_id int(11),
-    product_id int(11),
-    quantity int(5),
-    line_total float(15),
-    isTaxable boolean,
-    primary key(id)
+	id int(11) NOT NULL,
+    invoice_id int(11) NOT NULL,
+    product_id int(11) NOT NULL,
+    quantity int(5) NOT NULL,
+    line_total FLOAT(15) NOT NULL,
+    isTaxable boolean NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE customerHistory(
-	id int(11),
-    customer_id int(11),
-    invoice_number int(11),
-    balance float(15),
-    primary key(id)
+	id int(11) NOT NULL,
+    customer_id int(11) NOT NULL,
+    invoice_number int(11) NOT NULL,
+    balance FLOAT(15) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE supplier(
-	id int(11),
-    supplier_name varchar(50),
-    supplier_since date,
-    address_1 varchar(50),
-    address_2 varchar(50),
-    district varchar(50),
-    phone varchar(50),
-    email varchar(50),
-    website varchar(50),
-    primary key(id)
+	id int(11) NOT NULL,
+    supplier_name VARCHAR(50) NOT NULL,
+    supplier_since DATE NOT NULL,
+    address_1 VARCHAR(50) NOT NULL,
+    address_2 VARCHAR(50) NOT NULL,
+    district VARCHAR(50) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    website VARCHAR(50) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE purchase_order(
-	id int(11),
-    order_date date,
-    supplier_id int(11),
-    order_total float(15),
-    tax_rate float(5),
-    tax_amount float(15),
-    grand_total float(15),
-    isPaid boolean,
-    primary key(id)
+	id int(11) NOT NULL,
+    order_date DATE NOT NULL,
+    supplier_id int(11) NOT NULL,
+    order_total FLOAT(15) NOT NULL,
+    tax_rate FLOAT(5) NOT NULL,
+    tax_amount FLOAT(15) NOT NULL,
+    grand_total FLOAT(15) NOT NULL,
+    isPaid boolean NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
-CREATE TABLE purchase_order_detail(
-	id int(11),
-    purchase_order_id int(11),
-    product_id int(11),
-    quantity int(5),
-    line_total float(15),
-    isTaxable boolean,
-    primary key(id)
+CREATE TABLE purchaseorderdetail(
+	id int(11) NOT NULL,
+    purchase_order_id int(11) NOT NULL,
+    product_id int(11) NOT NULL,
+    quantity int(5) NOT NULL,
+    line_total FLOAT(15) NOT NULL,
+    isTaxable boolean NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE supplierHistory(
-	id int(11),
-    supplier_id int(11),
-    payment_date date,
-    purchase_order_id int(11),
-    payment_amount float(15),
-    balance_due date,
-    paidInFull boolean,
-	primary key(id)
+	id int(11) NOT NULL,
+    supplier_id int(11) NOT NULL,
+    payment_date DATE NOT NULL,
+    purchase_order_id int(11) NOT NULL,
+    payment_amount FLOAT(15) NOT NULL,
+    balance_due DATE NOT NULL,
+    paidInFull boolean NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
 );
